@@ -1,52 +1,45 @@
-const input = document.getElementById('todo-input');
-const addBtn = document.getElementById('add-btn');
-const list = document.getElementById('todo-list');
+// Select elements
+
+const input = document.getElementById("todo-input");
+const button = document.getElementById("add-btn");
+const list = document.getElementById("todo-list");
+const meta = document.querySelector('.meta');
 
 function updateCount() {
-  const countEl = document.querySelector('.footer .meta');
-  const items = list.querySelectorAll('.todo-item').length;
-  countEl.textContent = `${items} item${items !== 1 ? 's' : ''}`;
+  if (meta) meta.textContent = `${list.children.length} items`;
 }
 
-function createItem(text) {
-  const item = document.createElement('div');
+// add task
+button.addEventListener("click", function() {
+  const task = input.value.trim();
+  if (!task) {
+    alert("Please enter a task");
+    return;
+  }
+
+  const item = document.createElement("div");
   item.className = 'todo-item';
 
-  const check = document.createElement('button');
-  check.className = 'check';
-  check.textContent = '✓';
-  check.addEventListener('click', () => {
-    textEl.classList.toggle('done');
+  const text = document.createElement("div");
+  text.className = 'todo-text';
+  text.textContent = task;
+
+  const deletebutton = document.createElement("button");
+  deletebutton.className = 'btn-delete';
+  deletebutton.textContent = 'Delete';
+  deletebutton.addEventListener("click", function() {
+    item.remove();
+    updateCount();
   });
 
-  const textEl = document.createElement('div');
-  textEl.className = 'todo-text';
-  textEl.textContent = text;
-
-  const del = document.createElement('button');
-  del.className = 'btn-primary';
-  del.style.background = 'transparent';
-  del.style.color = 'var(--muted)';
-  del.style.border = 'none';
-  del.textContent = 'Delete';
-  del.addEventListener('click', () => { item.remove(); updateCount(); });
-
-  item.appendChild(check);
-  item.appendChild(textEl);
-  item.appendChild(del);
-  return item;
-}
-
-addBtn.addEventListener('click', () => {
-  const val = input.value.trim();
-  if (!val) return;
-  const item = createItem(val);
+  item.appendChild(text);
+  item.appendChild(deletebutton);
   list.appendChild(item);
-  input.value = '';
+  input.value = "";
   updateCount();
 });
 
-input.addEventListener('keydown', (e) => { if (e.key === 'Enter') addBtn.click(); });
-
-// initial count
-updateCount();
+// allow Enter key to add
+input.addEventListener('keydown', function(e){
+  if (e.key === 'Enter') button.click();
+});

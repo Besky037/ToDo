@@ -77,6 +77,18 @@ h1 { margin:0;font-size:20px;letter-spacing:-0.2px }
 }
 .btn-primary:active{ transform: translateY(1px) }
 
+/* small delete button that matches theme */
+.btn-delete{
+	background: transparent;
+	color: var(--primary-600);
+	border: 1px solid rgba(30,64,175,0.08);
+	padding: 6px 10px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight:600;
+}
+.btn-delete:hover{ background: rgba(30,64,175,0.04) }
+
 .todo-list { margin-top:16px; display:flex; flex-direction:column; gap:10px; }
 
 .todo-item {
